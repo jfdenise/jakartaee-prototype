@@ -1300,8 +1300,6 @@ public class Transformer {
                 directoryAction.addAction(rarAction);
                 directoryAction.addAction(earAction);
                 directoryAction.addAction(xmlAction);
-                directoryAction.addAction(propertiesAction);
-                directoryAction.addAction(tldAction);
                 directoryAction.addAction(nullAction);
 
                 jarAction.addAction(classAction);
@@ -1311,7 +1309,7 @@ public class Transformer {
                 jarAction.addAction(featureAction);
                 jarAction.addAction(xmlAction);
                 jarAction.addAction(propertiesAction);
-                directoryAction.addAction(tldAction);
+                jarAction.addAction(tldAction);
                 jarAction.addAction(nullAction);
 
                 warAction.addAction(classAction);
@@ -1349,8 +1347,6 @@ public class Transformer {
                 zipAction.addAction(rarAction);
                 zipAction.addAction(earAction);
                 zipAction.addAction(xmlAction);
-                zipAction.addAction(propertiesAction);
-                directoryAction.addAction(tldAction);
                 zipAction.addAction(nullAction);
 
                 rootAction = useRootAction;
