@@ -61,7 +61,8 @@ import org.eclipse.transformer.util.FileUtils;
 import aQute.lib.io.IO;
 import aQute.lib.utf8properties.UTF8Properties;
 import aQute.libg.uri.URIUtil;
-
+import org.eclipse.transformer.action.impl.PropertiesActionImpl;
+import org.eclipse.transformer.action.impl.TLDActionImpl;
 public class Transformer {
     // TODO: Make this an enum?
 
@@ -487,6 +488,11 @@ public class Transformer {
     private String[] args;
     private CommandLine parsedArgs;
 
+    private boolean hasChanges;
+
+    public boolean hasChanges() {
+        return hasChanges;
+    }
     /**
      * Set default resource references for the several 'RULE" options.
      * 
@@ -1258,6 +1264,9 @@ public class Transformer {
                 ManifestActionImpl featureAction =
                     useRootAction.addUsing( ManifestActionImpl::newFeatureAction );
 
+                PropertiesActionImpl propertiesAction
+                        = useRootAction.addUsing(PropertiesActionImpl::new);
+
                 JarActionImpl jarAction =
                     useRootAction.addUsing( JarActionImpl::new );
                 WarActionImpl warAction =
@@ -1269,6 +1278,9 @@ public class Transformer {
 
                 XmlActionImpl xmlAction =
                         useRootAction.addUsing( XmlActionImpl::new );
+
+                TLDActionImpl tldAction
+                        = useRootAction.addUsing(TLDActionImpl::new);
                 
                 ZipActionImpl zipAction =
                     useRootAction.addUsing( ZipActionImpl::new );
@@ -1297,7 +1309,10 @@ public class Transformer {
                 jarAction.addAction(manifestAction);
                 jarAction.addAction(featureAction);
                 jarAction.addAction(xmlAction);
+                jarAction.addAction(tldAction);
+                jarAction.addAction(propertiesAction);
                 jarAction.addAction(nullAction);
+
 
                 warAction.addAction(classAction);
                 warAction.addAction(javaAction);
@@ -1365,6 +1380,13 @@ public class Transformer {
                     return true;
                 }
             }
+        }
+
+        public boolean hasChanges() {
+            if (acceptedAction != null) {
+                return acceptedAction.getLastActiveChanges().hasChanges();
+            }
+            return false;
         }
 
         public void transform()
@@ -1458,7 +1480,7 @@ public class Transformer {
             dual_error("Unexpected failure:", th);
             return TRANSFORM_ERROR_RC;
         }
-
+        hasChanges = options.hasChanges();
         return SUCCESS_RC;
     }
 }
