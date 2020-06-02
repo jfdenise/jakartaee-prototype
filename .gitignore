@@ -7,6 +7,9 @@ build/
 # Ignore Eclipse build output directory
 bin/
 
+# maven target
+target
+
 *.bak
 /.metadata/
 /.recommenders/
