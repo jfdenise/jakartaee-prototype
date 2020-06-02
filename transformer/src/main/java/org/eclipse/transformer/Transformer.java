@@ -54,6 +54,7 @@ import org.eclipse.transformer.action.impl.RarActionImpl;
 import org.eclipse.transformer.action.impl.SelectionRuleImpl;
 import org.eclipse.transformer.action.impl.ServiceLoaderConfigActionImpl;
 import org.eclipse.transformer.action.impl.SignatureRuleImpl;
+import org.eclipse.transformer.action.impl.TldActionImpl;
 import org.eclipse.transformer.action.impl.WarActionImpl;
 import org.eclipse.transformer.action.impl.XmlActionImpl;
 import org.eclipse.transformer.action.impl.ZipActionImpl;
@@ -1260,7 +1261,8 @@ public class Transformer {
                     useRootAction.addUsing( ManifestActionImpl::newFeatureAction );
                 PropertiesActionImpl propertiesAction
                         = useRootAction.addUsing(PropertiesActionImpl::new);
-
+                TldActionImpl tldAction
+                        = useRootAction.addUsing(TldActionImpl::new);
                 JarActionImpl jarAction =
                     useRootAction.addUsing( JarActionImpl::new );
                 WarActionImpl warAction =
@@ -1293,6 +1295,7 @@ public class Transformer {
                 directoryAction.addAction(earAction);
                 directoryAction.addAction(xmlAction);
                 directoryAction.addAction(propertiesAction);
+                directoryAction.addAction(tldAction);
                 directoryAction.addAction(nullAction);
 
                 jarAction.addAction(classAction);
@@ -1302,6 +1305,7 @@ public class Transformer {
                 jarAction.addAction(featureAction);
                 jarAction.addAction(xmlAction);
                 jarAction.addAction(propertiesAction);
+                directoryAction.addAction(tldAction);
                 jarAction.addAction(nullAction);
 
                 warAction.addAction(classAction);
@@ -1340,6 +1344,7 @@ public class Transformer {
                 zipAction.addAction(earAction);
                 zipAction.addAction(xmlAction);
                 zipAction.addAction(propertiesAction);
+                directoryAction.addAction(tldAction);
                 zipAction.addAction(nullAction);
 
                 rootAction = useRootAction;
